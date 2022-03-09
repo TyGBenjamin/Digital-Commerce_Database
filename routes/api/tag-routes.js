@@ -1,28 +1,91 @@
-const router = require('express').Router();
-const { Tag, Product, ProductTag } = require('../../models');
+const router = require("express").Router();
+const { Tag, Product, ProductTag } = require("../../models");
 
 // The `/api/tags` endpoint
 
-router.get('/', (req, res) => {
-  // find all tags
-  // be sure to include its associated Product data
+// Find All Tags
+
+router.get("/", async (req, res) => {
+  try {
+    const tagData = await Tag.findAll({
+      include: [{ model: Product }],
+    });
+    res.status(200).json(tagData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-router.get('/:id', (req, res) => {
-  // find a single tag by its `id`
-  // be sure to include its associated Product data
+// Select Tag based on its ID
+
+router.get("/:id", async (req, res) => {
+  try {
+    const tagData = await Tag.findByPk(req.params.id, {
+      include: [{ model: Product }, { model: ProductTag }],
+    });
+    if (!tagData) {
+      res.status(404).json({ message: "No Category found with that id!" });
+      return;
+    }
+    res.status(200).json(tagData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-router.post('/', (req, res) => {
-  // create a new tag
+// Creating New Tag
+
+router.post("/", async (req, res) => {
+  try {
+    const newData = await Tag.create({
+      category_name: req.body.category_name,
+    });
+    res.json(newData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-router.put('/:id', (req, res) => {
-  // update a tag's name by its `id` value
+// Update Tag info based on chosen id
+router.put("/:id", async (req, res) => {
+  try {
+    const updatedTag = await Tag.update(
+      {
+        // All the fields you can update and the data attached to the request body.
+        tag_name: req.body.tag_name,
+      },
+      {
+        // Gets a category based on the category_id given in the request parameters
+        where: {
+          tag_id: req.params.tag_id,
+        },
+      }
+    );
+    res.json(updatedTag);
+  } catch (err) {
+    res.status(404).json({ message: ` Update Unsuccessful` });
+  }
 });
 
-router.delete('/:id', (req, res) => {
-  // delete on tag by its `id` value
+router.delete("/:id", async (req, res) => {
+  // delete a category by its `id` value
+
+  try {
+    const deletedCategory = await Category.destroy({
+      // Gets a category based on the category_id given in the request parameters
+      where: {
+        id: req.params.id,
+      },
+    });
+    if (!deletedCategory) {
+      res
+        .status(404)
+        .json({ message: `Delete Unsucessful, no category with that id` });
+    }
+    res.status(200).json(deletedCategory);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
