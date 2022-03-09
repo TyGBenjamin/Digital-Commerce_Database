@@ -55,7 +55,7 @@ router.put("/:id", async (req, res) => {
         tag_name: req.body.tag_name,
       },
       {
-        // Gets a category based on the category_id given in the request parameters
+        // Gets a tag based on the tag_id given in the request parameters
         where: {
           tag_id: req.params.tag_id,
         },
