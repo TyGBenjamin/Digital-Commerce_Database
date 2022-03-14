@@ -4,13 +4,12 @@ const { Product, Category, Tag, ProductTag } = require("../../models");
 // The `/api/products` endpoint
 
 // get all products
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
-
   try {
-    const productData = await Tag.findAll({
-      include: [{ model: ProductTag }, { model: Category }],
+    const productData = await Product.findAll({
+      include: [{ model: Category }, { model: Tag }],
     });
     res.status(200).json(productData);
   } catch (err) {
@@ -23,7 +22,7 @@ router.get("/:id", async (req, res) => {
   // find a single product by its `id`
   try {
     const productData = await Product.findByPk(req.params.id, {
-      include: [{ model: Category }, { model: ProductTag }],
+      include: [{ model: Category }],
     });
     if (!productData) {
       res.status(404).json({ message: "No Product found with that id!" });
@@ -36,7 +35,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // create new product
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -44,18 +43,15 @@ router.post("/", (req, res) => {
       stock: 3,
       tagIds: [1, 2, 3, 4]
     }
-
     
   */
-
-  const newData = await Category.create({
-    category_name: req.body.category_name,
-  });
-  Product.create({
+  await Product.create({
     product_name: req.body.product_name,
     // import important parts of sequelize library
     price: req.body.price,
     stock: req.body.stock,
+    category_id: req.body.category_id,
+    tagIds: req.body.tagIds,
   })
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
@@ -120,7 +116,7 @@ router.put("/:id", async (req, res) => {
     });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
   // delete one product by its `id` value
 
   try {
