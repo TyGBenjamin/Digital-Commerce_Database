@@ -121,7 +121,7 @@ router.delete("/:id", async (req, res) => {
 
   try {
     const deletedProduct = await Product.destroy({
-      // Gets a category based on the category_id given in the request parameters
+      // Gets a product based on the id given in the request parameters
       where: {
         id: req.params.id,
       },
@@ -130,6 +130,7 @@ router.delete("/:id", async (req, res) => {
       res
         .status(404)
         .json({ message: `Delete Unsucessful, no Product with that id` });
+      return;
     }
     res.status(200).json(deletedProduct);
   } catch (err) {
