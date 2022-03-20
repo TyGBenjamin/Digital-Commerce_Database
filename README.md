@@ -2,7 +2,7 @@
 
 ## Description
 
-This application is primarily used to run javascript code from the back-end in order to create, update, add and remove products and categories from a database for keeping track of a company's inventory.
+This application is primarily used to run javascript code from the back-end in order to create, update, add or remove products, tags,and categories from a database for keeping track of a company's inventory.
 
 ## Table of Contents
 
@@ -10,27 +10,23 @@ This application is primarily used to run javascript code from the back-end in o
 - [Usage](#usage)
 - [Acceptance Criteria](#criteria)
 - [Preview](#Preview)
-- [Credits](#credits) -[Questions](#questions)
+- [Credits](#credits)
+- [Questions](#questions)
 
 ## Installation
 
-Initially you musty have Node installed
-Also have to initiliaze the npm command to install inquirer which is a third party applicationto run the required npms.
-Additional Npms needed are DotEnv, console.table, express, and mysql2.
-After installing these, javascript has to be run from terminal through node in order to launch to the server, which would
-then initiate the prompts to be displayed and answered.
+This Application is primarily used for setting up database and creting routes to add, update, or delete form that same database. in order to test the application, Node JS and NPM packages such as Express, Sequleize, mysql2, would have to be installed. That way the routes can be properly tested.
 
 ## Preview
 
 A video for previewing the usage of this application can be found in the following link
-[Click Here for Video Walkthrough]()
+[Click Here for Video Walkthrough](https://www.youtube.com/watch?v=1-4mbo_4-Bk)
 
-![Screenshot of Application]()
+![Screenshot of Application](https://user-images.githubusercontent.com/94323045/159177392-2245ac62-78cc-4506-bee0-783b2a16ee41.png)
 
 ## Usage
 
-This application can be used to quickly update roles, departments and employee profiles
-as part of a Human Resources management database application.
+This application can be used to quickly update names and amounts of Products that a company wants to keep track of for inventory and documentation purposes.
 
 ## User Story
 
@@ -40,23 +36,17 @@ SO THAT my company can easily keep track of stock and inventory
 
 ## Criteria
 
-GIVEN a command-line application that accepts user input
-WHEN I start the application
-THEN I am presented with the following options: view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
-WHEN I choose to view all departments
-THEN I am presented with a formatted table showing department names and department ids
-WHEN I choose to view all roles
-THEN I am presented with the job title, role id, the department that role belongs to, and the salary for that role
-WHEN I choose to view all employees
-THEN I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
-WHEN I choose to add a department
-THEN I am prompted to enter the name of the department and that department is added to the database
-WHEN I choose to add a role
-THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
-WHEN I choose to add an employee
-THEN I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
-WHEN I choose to update an employee role
-THEN I am prompted to select an employee to update and their new role and this information is updated in the database
+GIVEN a functional Express.js API
+WHEN I add my database name, MySQL username, and MySQL password to an environment variable file
+THEN I am able to connect to a database using Sequelize
+WHEN I enter schema and seed commands
+THEN a development database is created and is seeded with test data
+WHEN I enter the command to invoke the application
+THEN my server is started and the Sequelize models are synced to the MySQL database
+WHEN I open API GET routes in Insomnia for categories, products, or tags
+THEN the data for each of these routes is displayed in a formatted JSON
+WHEN I test API POST, PUT, and DELETE routes in Insomnia
+THEN I am able to successfully create, update, and delete data in my database
 
 ## Credits
 
@@ -73,12 +63,11 @@ MIT
 ## Features
 
 Node Js
-NPM
-NPM Node filesystem
+NPM Sequelize
 NPM Express
 NPM Mysql2
-NPM Console.Table
 NPM DotEnv
+Insomnia
 
 ## Questions
 
