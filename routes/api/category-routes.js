@@ -51,12 +51,13 @@ router.put("/:id", async (req, res) => {
       {
         // Gets a category based on the category_id given in the request parameters
         where: {
-          category_id: req.params.category_id,
+          id: req.params.id,
         },
       }
     );
     res.json(updatedCategory);
   } catch (err) {
+    console.log(err);
     res.status(404).json({ message: ` Update Unsuccessful` });
   }
 });
